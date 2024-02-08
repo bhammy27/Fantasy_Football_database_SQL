@@ -1,0 +1,47 @@
+-- inserting data into defense_raw from csv
+COPY defense_raw
+FROM
+	'C:\Users\bhamm\OneDrive\Documents\FFdb_raw\mySQL\D.csv'
+DELIMITER ','
+CSV HEADER;
+
+-- Cleaning the defense_raw table
+-- data in def_td & spc_td is redundant because dst_td is a total of those columns
+-- dropping def_td & spc_td 
+ALTER TABLE defense_raw
+DROP COLUMN def_td,
+DROP COLUMN spc_td;
+SELECT *
+FROM defense_raw;
+-- checking to make sure there are 18 distinct weeks, 32 players, 2 game values, and 6 seasons
+SELECT 
+	COUNT(DISTINCT week),
+	COUNT(DISTINCT player),
+	COUNT(DISTINCT team_code),
+	COUNT(DISTINCT games),
+	COUNT(DISTINCT season)
+FROM defense_raw;
+
+-- inserting a new field called position
+-- this field will help filter data once we model the database
+ALTER TABLE defense_raw 
+ADD COLUMN	position varchar(3);
+-- Assigning the position abbreviation to the new field
+UPDATE defense_raw
+SET position = 'D';
+
+SELECT *
+FROM defense_raw;
+	
+-- trimming all whitespaces from text fields
+SELECT
+	trim(player),
+	trim(team_code),
+	trim(position)
+FROM 
+	defense_raw;
+-- create a new table defense_clean with the cleaned data from defense_raw
+-- using create table instead of temp table will create a reference point for the future
+CREATE TABLE defense_clean AS
+SELECT *
+FROM defense_raw;
