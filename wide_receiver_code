@@ -1,0 +1,68 @@
+-- inserting data into wide_receiver from csv
+COPY wide_receiver
+FROM
+	'C:\Users\bhamm\OneDrive\Documents\FFdb_raw\mySQL\WR.csv'
+DELIMITER ','
+CSV HEADER;
+
+-- counting week, player (should have 596), games, and season rows
+SELECT 
+	COUNT(DISTINCT week),
+	COUNT(DISTINCT player),
+	COUNT(DISTINCT games),
+	COUNT(DISTINCT season)
+FROM
+	wide_receiver;
+
+-- filtering out and deleting wide receivers with no targets or carries in 2023
+-- players without 2023 stats add no value to the database
+-- first I first count the number of players being dropped before dropping them
+SELECT
+	player
+FROM
+	wide_receiver
+WHERE
+	season = 2023
+GROUP BY 
+	player
+HAVING 
+	SUM(targets) = 0
+	AND SUM(carries) = 0;
+
+-- the results of the above query shows 128 players that needed dropped
+-- dropping players
+DELETE FROM wide_receiver
+WHERE player IN (
+				SELECT
+					player
+				FROM
+					wide_receiver
+				WHERE
+					season = 2023
+				GROUP BY 
+					player
+				HAVING 
+					SUM(targets) = 0
+					AND SUM(carries) = 0);
+
+-- running the query below returns 468 players which is 128 less than the  we started with	
+SELECT 
+ 	COUNT(DISTINCT player)
+FROM
+	wide_receiver;
+	
+-- inserting a new field called position
+-- this field will help filter data once we model the database
+ALTER TABLE wide_receiver
+ADD COLUMN	position varchar(3);
+-- Assigning the position abbreviation to the new field
+UPDATE running_back
+SET position = 'WR';
+	
+-- trimming all whitespaces from text fields
+SELECT
+	trim(player),
+	trim(team_code),
+	trim(position)
+FROM 
+	wide_receiver;
