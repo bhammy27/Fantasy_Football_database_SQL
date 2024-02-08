@@ -69,4 +69,79 @@ SELECT
 	trim(position)
 FROM 
 	running_back;
+
+-- checking for duplicates by cross referencing games played per season
+-- creating a pivot table using the FILTER clause to display games played per season
+-- max games played per season from 2023-2021 = 17 and from 2020-2018 = 16
+-- players with more games played than that suggest errors in the data
+SELECT
+	DISTINCT player,
+	COALESCE(SUM(games) FILTER(WHERE season = 2023),0) AS "2023",
+	COALESCE(SUM(games) FILTER(WHERE season = 2022),0) AS "2022",
+	COALESCE(SUM(games) FILTER(WHERE season = 2021),0) AS "2021",
+	COALESCE(SUM(games) FILTER(WHERE season = 2020),0) AS "2020",
+	COALESCE(SUM(games) FILTER(WHERE season = 2019),0) AS "2019",
+	COALESCE(SUM(games) FILTER(WHERE season = 2018),0) AS "2018"
+FROM
+	running_back
+GROUP BY
+	player
+ORDER BY
+	"2019" DESC,
+	player;
+
+-- checking Raheem Mostert who had over 16 games in 2019
+SELECT *
+FROM
+	running_back
+WHERE
+	player = 'Raheem Mostert'
+	AND season = 2019
+ORDER BY
+	week;
+-- this shows dupicate values for week 3 & 4  also week 7 has no values
+-- fantasydata.com shows he did not play in week 4 and week 7 was a bye
+-- I will delete the week 4 record and change week 7 game to 0 from 1
+DELETE FROM 
+	running_back
+WHERE 
+	player = 'Raheem Mostert'
+    AND season = 2019
+    AND week = 4;
+
+-- now updating the game for week 7 to 0 from 1
+UPDATE 
+	running_back
+SET 
+	games = 0
+WHERE 
+	player = 'Raheem Mostert'
+    AND season = 2019
+    AND week = 7;
+	
+-- Now using the same process to correct Ty Montgomery II
+SELECT *
+FROM
+	running_back
+WHERE
+	player = 'Ty Montgomery II'
+	AND season = 2019
+ORDER BY
+	week;
+	
+DELETE FROM 
+	running_back
+WHERE 
+	player = 'Ty Montgomery II'
+    AND season = 2019
+    AND week = 4;
+	
+UPDATE 
+	running_back
+SET 
+	games = 0
+WHERE 
+	player = 'Ty Montgomery II'
+    AND season = 2019
+    AND week = 7;
 	
