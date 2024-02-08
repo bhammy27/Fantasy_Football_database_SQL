@@ -66,3 +66,126 @@ SELECT
 	trim(position)
 FROM 
 	wide_receiver;
+	
+-- checking for duplicates by cross referencing games played per season
+-- creating a pivot table using the FILTER clause to display games played per season
+-- max games played per season from 2023-2021 = 17 and from 2020-2018 = 16
+-- players with more games played than that suggest errors in the data
+SELECT
+	DISTINCT player,
+	COALESCE(SUM(games) FILTER(WHERE season = 2023),0) AS "2023",
+	COALESCE(SUM(games) FILTER(WHERE season = 2022),0) AS "2022",
+	COALESCE(SUM(games) FILTER(WHERE season = 2021),0) AS "2021",
+	COALESCE(SUM(games) FILTER(WHERE season = 2020),0) AS "2020",
+	COALESCE(SUM(games) FILTER(WHERE season = 2019),0) AS "2019",
+	COALESCE(SUM(games) FILTER(WHERE season = 2018),0) AS "2018"
+FROM
+	wide_receiver
+GROUP BY
+	player
+ORDER BY
+	"2021" DESC,
+	player;
+	
+-- checking DeVonta Smith who had over 18 games in 2021
+SELECT *
+FROM
+	wide_receiver
+WHERE
+	player = 'DeVonta Smith'
+	AND season = 2021
+ORDER BY
+	week;
+-- this shows dupicate values for week 13 & 14
+-- fantasydata.com shows he had a bye in week 14
+-- I will delete the week 14 record 
+DELETE FROM 
+	wide_receiver
+WHERE 
+	player = 'DeVonta Smith'
+	AND season = 2021
+    AND week = 14;
+
+-- checking Jalen Reagor who had over 18 games in 2021
+SELECT *
+FROM
+	wide_receiver
+WHERE
+	player = 'Jalen Reagor'
+	AND season = 2021
+ORDER BY
+	week;
+-- this shows dupicate values for week 13 & 14
+-- fantasydata.com shows he had a bye in week 14
+-- I will delete the week 14 record 
+DELETE FROM 
+	wide_receiver
+WHERE 
+	player = 'Jalen Reagor'
+	AND season = 2021
+    AND week = 14;
+	
+-- checking Kendrick Bourne who had over 18 games in 2021
+SELECT *
+FROM
+	wide_receiver
+WHERE
+	player = 'Kendrick Bourne'
+	AND season = 2021
+ORDER BY
+	week;
+	
+-- this shows dupicate values for week 13 & 14
+-- fantasydata.com shows he had a bye in week 14
+-- I will delete the week 14 record 
+DELETE FROM 
+	wide_receiver
+WHERE 
+	player = 'Kendrick Bourne'
+	AND season = 2021
+    AND week = 14;
+	
+-- checking Michael Pittman Jr who had over 18 games in 2021
+SELECT *
+FROM
+	wide_receiver
+WHERE
+	player = 'Michael Pittman Jr.'
+	AND season = 2021
+ORDER BY
+	week;
+	
+-- this shows dupicate values for week 13 & 14
+-- fantasydata.com shows he had a bye in week 14
+-- I will delete the week 14 record 
+DELETE FROM 
+	wide_receiver
+WHERE 
+	player = 'Michael Pittman Jr.'
+	AND season = 2021
+    AND week = 14;
+	
+-- checking Quez Watkins who had over 18 games in 2021
+SELECT *
+FROM
+	wide_receiver
+WHERE
+	player = 'Quez Watkins'
+	AND season = 2021
+ORDER BY
+	week;
+	
+-- this shows dupicate values for week 13 & 14
+-- fantasydata.com shows he had a bye in week 14
+-- I will delete the week 14 record 
+DELETE FROM 
+	wide_receiver
+WHERE 
+	player = 'Quez Watkins'
+	AND season = 2021
+    AND week = 14;
+	trim(player),
+	trim(team_code),
+	trim(position)
+FROM 
+	wide_receiver;
