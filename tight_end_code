@@ -1,0 +1,68 @@
+-- inserting data into tight_end from csv
+COPY tight_end
+FROM
+	'C:\Users\bhamm\OneDrive\Documents\FFdb_raw\mySQL\TE.csv'
+DELIMITER ','
+CSV HEADER;
+
+-- counting week, player (should have 349), games, and season rows
+SELECT 
+	COUNT(DISTINCT week),
+	COUNT(DISTINCT player),
+	COUNT(DISTINCT games),
+	COUNT(DISTINCT season)
+FROM
+	tight_end;
+
+-- filtering out and deleting tight ends with no targets or carries in 2023
+-- players without 2023 stats add no value to the database
+-- first I first count the number of players being dropped before dropping them
+SELECT
+	player
+FROM
+	tight_end
+WHERE
+	season = 2023
+GROUP BY 
+	player
+HAVING 
+	SUM(targets) = 0
+	AND SUM(carries) = 0;
+
+-- the results of the above query shows 85 players that needed dropped
+-- dropping players
+DELETE FROM tight_end
+WHERE player IN (
+				SELECT
+					player
+				FROM
+					tight_end
+				WHERE
+					season = 2023
+				GROUP BY 
+					player
+				HAVING 
+					SUM(targets) = 0
+					AND SUM(carries) = 0);
+
+-- running the query below returns 264 players which is 128 less than the  we started with	
+SELECT 
+ 	COUNT(DISTINCT player)
+FROM
+	tight_end;
+	
+-- inserting a new field called position
+-- this field will help filter data once we model the database
+ALTER TABLE tight_end
+ADD COLUMN	position varchar(3);
+-- Assigning the position abbreviation to the new field
+UPDATE running_back
+SET position = 'TE';
+	
+-- trimming all whitespaces from text fields
+SELECT
+	trim(player),
+	trim(team_code),
+	trim(position)
+FROM 
+	tight_end;
