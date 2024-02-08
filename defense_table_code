@@ -40,8 +40,3 @@ SELECT
 	trim(position)
 FROM 
 	defense_raw;
--- create a new table defense_clean with the cleaned data from defense_raw
--- using create table instead of temp table will create a reference point for the future
-CREATE TABLE defense_clean AS
-SELECT *
-FROM defense_raw;
