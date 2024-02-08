@@ -1,0 +1,96 @@
+-- inserting data into kicker from csv
+COPY kicker
+FROM
+	'C:\Users\bhamm\OneDrive\Documents\FFdb_raw\mySQL\K.csv'
+DELIMITER ','
+CSV HEADER;
+
+-- counting week, player (should have 104), games, and season rows
+SELECT 
+	COUNT(DISTINCT week),
+	COUNT(DISTINCT player),
+	COUNT(DISTINCT team_code),
+	COUNT(DISTINCT games),
+	COUNT(DISTINCT season)
+FROM
+	kicker;
+
+ALTER TABLE kicker
+ADD COLUMN	position varchar(3);
+-- Assigning the position abbreviation to the new field
+UPDATE kicker
+SET position = 'K';
+
+SELECT *
+FROM kicker;
+	
+-- trimming all whitespaces from text fields
+SELECT
+	trim(player),
+	trim(team_code),
+	trim(position)
+FROM 
+	kicker;
+
+-- adding column under-forty which will contain values from the sum of columns
+ALTER TABLE kicker
+ADD COLUMN under_forty INTEGER;
+
+-- assigning the result from adding 3 columns into under_forty
+UPDATE kicker
+SET under_forty = under_twenty_yds + twenty_yd_range + thirty_yd_range;
+
+-- deleting unnecessary columns under_twenty_yds,twenty_yd_range, and thirty_yd_range
+-- when calculating fantasy points these columns all provde the same points
+-- they are not needed with the new under_fourty field
+ALTER TABLE kicker
+DROP COLUMN under_twenty_yds,
+DROP COLUMN twenty_yd_range,
+DROP COLUMN thirty_yd_range;
+
+-- filtering out and deleting kickers with no field goal or extra point attempts in 2023
+-- players without 2023 stats add no value to the database
+-- first I first count the number of players being dropped before dropping them
+SELECT
+	player
+FROM
+	kicker
+WHERE
+	season = 2023
+GROUP BY 
+	player
+HAVING 
+	SUM(fg_att) = 0
+	AND SUM(xpa) = 0;
+
+-- the results of the above query shows 20 players that needed dropped
+-- dropping players
+DELETE FROM kicker
+WHERE player IN (
+				SELECT
+					player
+				FROM
+					kicker
+				WHERE
+					season = 2023
+				GROUP BY 
+					player
+				HAVING 
+					SUM(fg_att) = 0
+					AND SUM(xpa) = 0);
+
+-- running the query below returns 84 players which is 20 less than the 104 we started with	
+SELECT 
+ 	COUNT(DISTINCT player)
+FROM
+	kicker;
+	
+-- checking the table for any errors
+SELECT *
+FROM 
+	kicker
+ORDER BY 
+	season DESC,
+	week,
+	player;
+	
