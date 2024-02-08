@@ -1,0 +1,68 @@
+-- inserting data into quarteback from csv
+COPY quarterback
+FROM
+	'C:\Users\bhamm\OneDrive\Documents\FFdb_raw\mySQL\QB.csv'
+DELIMITER ','
+CSV HEADER;
+
+-- counting week, player (should have 173), games, and season rows
+SELECT 
+	COUNT(DISTINCT week),
+	COUNT(DISTINCT player),
+	COUNT(DISTINCT games),
+	COUNT(DISTINCT season)
+FROM
+	quarterback;
+
+-- filtering out and deleting quarterbacks with no pass_att or carries in 2023
+-- players without 2023 stats add no value to the database
+-- first I first count the number of players being dropped before dropping them
+SELECT
+	player
+FROM
+	quarterback
+WHERE
+	season = 2023
+GROUP BY 
+	player
+HAVING 
+	SUM(pass_att) = 0
+	AND SUM(carries) = 0;
+
+-- the results of the above query shows 38 players that needed dropped
+-- dropping players
+DELETE FROM quarterback
+WHERE player IN (
+				SELECT
+					player
+				FROM
+					quarterback
+				WHERE
+					season = 2023
+				GROUP BY 
+					player
+				HAVING 
+					SUM(pass_att) = 0
+					AND SUM(carries) = 0);
+
+-- running the query below returns 135 players which is 38 less than the 104 we started with	
+SELECT 
+ 	COUNT(DISTINCT player)
+FROM
+	quarterback;
+	
+-- inserting a new field called position
+-- this field will help filter data once we model the database
+ALTER TABLE quarterback
+ADD COLUMN	position varchar(3);
+-- Assigning the position abbreviation to the new field
+UPDATE quarterback
+SET position = 'QB';
+
+-- trimming all whitespaces from text fields
+SELECT
+	trim(player),
+	trim(team_code),
+	trim(position)
+FROM 
+	quarterback;
