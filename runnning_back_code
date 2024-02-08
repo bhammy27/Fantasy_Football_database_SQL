@@ -1,0 +1,72 @@
+-- inserting data into running_back from csv
+COPY running_back
+FROM
+	'C:\Users\bhamm\OneDrive\Documents\FFdb_raw\mySQL\RB.csv'
+DELIMITER ','
+CSV HEADER;
+
+
+-- counting week, player (should have 614), games, and season rows
+SELECT 
+	COUNT(DISTINCT week),
+	COUNT(DISTINCT player),
+	COUNT(DISTINCT games),
+	COUNT(DISTINCT season)
+FROM
+	running_back;
+
+SELECT * FROM running_back;
+
+-- filtering out and deleting runningbacks with no targets or carries in 2023
+-- players without 2023 stats add no value to the database
+-- first I first count the number of players being dropped before dropping them
+SELECT
+	player
+FROM
+	running_back
+WHERE
+	season = 2023
+GROUP BY 
+	player
+HAVING 
+	SUM(targets) = 0
+	AND SUM(carries) = 0;
+
+-- the results of the above query shows 194 players that needed dropped
+-- dropping players
+DELETE FROM running_back
+WHERE player IN (
+				SELECT
+					player
+				FROM
+					running_back
+				WHERE
+					season = 2023
+				GROUP BY 
+					player
+				HAVING 
+					SUM(targets) = 0
+					AND SUM(carries) = 0);
+
+-- running the query below returns 420 players which is 194 less than the  we started with	
+SELECT 
+ 	COUNT(DISTINCT player)
+FROM
+	running_back;
+	
+-- inserting a new field called position
+-- this field will help filter data once we model the database
+ALTER TABLE running_back
+ADD COLUMN	position varchar(3);
+-- Assigning the position abbreviation to the new field
+UPDATE running_back
+SET position = 'RB';
+	
+-- trimming all whitespaces from text fields
+SELECT
+	trim(player),
+	trim(team_code),
+	trim(position)
+FROM 
+	running_back;
+	
