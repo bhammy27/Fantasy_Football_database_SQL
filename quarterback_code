@@ -66,3 +66,80 @@ SELECT
 	trim(position)
 FROM 
 	quarterback;
+	
+-- checking for duplicates by cross referencing games played per season
+-- creating a pivot table using the FILTER clause to display games played per season
+-- max games played per season from 2023-2021 = 17 and from 2020-2018 = 16
+-- players with more games played than that suggest errors in the data
+SELECT
+	DISTINCT player,
+	COALESCE(SUM(games) FILTER(WHERE season = 2023),0) AS "2023",
+	COALESCE(SUM(games) FILTER(WHERE season = 2022),0) AS "2022",
+	COALESCE(SUM(games) FILTER(WHERE season = 2021),0) AS "2021",
+	COALESCE(SUM(games) FILTER(WHERE season = 2020),0) AS "2020",
+	COALESCE(SUM(games) FILTER(WHERE season = 2019),0) AS "2019",
+	COALESCE(SUM(games) FILTER(WHERE season = 2018),0) AS "2018"
+FROM
+	quarterback
+GROUP BY
+	player
+ORDER BY
+	"2023" DESC,
+	player;
+	
+-- checking Baker Mayfield who had 18 games in 2023
+SELECT *
+FROM
+	quarterback
+WHERE
+	player = 'Baker Mayfield'
+	AND season = 2023
+ORDER BY
+	week;
+	
+-- this shows the same stats for weeks 4 & 5 
+-- Baker had a BYE in week 5.  I will delete that record
+DELETE FROM 
+	quarterback
+WHERE 
+	player = 'Baker Mayfield'
+    AND season = 2023
+    AND week = 5;
+	
+-- checking Matt Ryan who had 18 games in 2021
+SELECT *
+FROM
+	quarterback
+WHERE
+	player = 'Matt Ryan'
+	AND season = 2021
+ORDER BY
+	week;
+	
+-- this shows the same stats for weeks 5 & 6 
+-- Matt had a BYE in week 6.  I will delete that record
+DELETE FROM 
+	quarterback
+WHERE 
+	player = 'Matt Ryan'
+    AND season = 2021
+    AND week = 6;
+	
+-- checking Josh Allen who had 18 games in 2020
+SELECT *
+FROM
+	quarterback
+WHERE
+	player = 'Josh Allen'
+	AND season = 2020
+ORDER BY
+	week;
+	
+-- this shows the same stats for weeks 10 & 11 
+-- Josh had a BYE in week 11.  I will delete that record
+DELETE FROM 
+	quarterback
+WHERE 
+	player = 'Josh ALlen'
+    AND season = 2020
+    AND week = 11;
