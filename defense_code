@@ -1,0 +1,61 @@
+-- inserting data into defense from csv
+COPY defense
+FROM
+	'C:\Users\bhamm\OneDrive\Documents\FFdb_raw\mySQL\D.csv'
+DELIMITER ','
+CSV HEADER;
+
+-- Cleaning the defense table
+-- data in def_td & spc_td is redundant because dst_td is a total of those columns
+-- dropping def_td & spc_td 
+ALTER TABLE defense
+DROP COLUMN def_td,
+DROP COLUMN spc_td;
+SELECT *
+FROM defense;
+-- checking to make sure there are 18 distinct weeks, 32 players, 2 game values, and 6 seasons
+SELECT 
+	COUNT(DISTINCT week),
+	COUNT(DISTINCT player),
+	COUNT(DISTINCT team_code),
+	COUNT(DISTINCT games),
+	COUNT(DISTINCT season)
+FROM defense;
+
+-- inserting a new field called position
+-- this field will help filter data once we model the database
+ALTER TABLE defense 
+ADD COLUMN	position varchar(3);
+-- Assigning the position abbreviation to the new field
+UPDATE defense
+SET position = 'D';
+	
+-- trimming all whitespaces from text fields
+SELECT
+	trim(player),
+	trim(team_code),
+	trim(position)
+FROM 
+	defense;
+	
+-- checking the table for any errors
+-- knowing each defense has 1 player then the count of each player's team_code should = 99
+-- this is because each team played 17 games from 2023-2021 and 16 games from 2020-2018
+-- adding the 17 games * 3 and 16 games * 3 * 32 teams = 3170 rows and it should be 3168
+-- I will run this query with each team code to find teams appearing over 99 times
+SELECT *
+FROM
+	defense
+WHERE
+	team_code = 'PIT';
+	
+-- both TEN and PIT appeared 100 times indicating each may have a duplicate row
+SELECT 
+	SUM(games)
+FROM 
+	defense
+WHERE
+	team_code = 'MIA';
+-- checking the results of this query should show duplicate weeks
+SELECT *
+FROM defense;
