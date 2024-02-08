@@ -56,7 +56,7 @@ FROM
 ALTER TABLE tight_end
 ADD COLUMN	position varchar(3);
 -- Assigning the position abbreviation to the new field
-UPDATE running_back
+UPDATE tight_end
 SET position = 'TE';
 	
 -- trimming all whitespaces from text fields
@@ -66,3 +66,23 @@ SELECT
 	trim(position)
 FROM 
 	tight_end;
+	
+-- checking for duplicates by cross referencing games played per season
+-- creating a pivot table using the FILTER clause to display games played per season
+-- max games played per season from 2023-2021 = 17 and from 2020-2018 = 16
+-- players with more games played than that suggest errors in the data
+SELECT
+	DISTINCT player,
+	COALESCE(SUM(games) FILTER(WHERE season = 2023),0) AS "2023",
+	COALESCE(SUM(games) FILTER(WHERE season = 2022),0) AS "2022",
+	COALESCE(SUM(games) FILTER(WHERE season = 2021),0) AS "2021",
+	COALESCE(SUM(games) FILTER(WHERE season = 2020),0) AS "2020",
+	COALESCE(SUM(games) FILTER(WHERE season = 2019),0) AS "2019",
+	COALESCE(SUM(games) FILTER(WHERE season = 2018),0) AS "2018"
+FROM
+	tight_end
+GROUP BY
+	player
+ORDER BY
+	"2023" DESC,
+	player;
