@@ -12,7 +12,7 @@ A desire to win my Fantasy Football leagues led to the realization that I have a
       - Prepare this data to create a [2024 Draft Analysis](https://github.com/bhammy27/2024_Draft_Report_SQL)
   -  Create and analyze a database from csv files using ETL and data modeling skills
       - Write queries using both DDL and DML 
-  -  Create a reference repository with frequently used queries and functions  
+  -  Create a reference repository with frequently used queries and functions
 
 ## The Data:
  -  Data was extracted on a weekly basis from [FantasyPros](https://www.fantasypros.com/nfl/stats/qb.php) using Power Query
@@ -83,10 +83,17 @@ A desire to win my Fantasy Football leagues led to the realization that I have a
 # Things I learned creating this database
 - Creating databases is FUN!!
     - This process provides excellent knowledge of the data making analyzing it easier
-    - The detailed methodical process required is the same process as my thought and reasoning process  
-- As a landscape designer, I learned early on that when drawing landscape designs to document each step, save each iteration, and keep a notepad nearby
+    - The detailed methodical process required is the same process as my thought and reasoning process
+- **Data cleaning never ends!**
+    - When creating the Draft Report, I discovered unremoved whitespace on players names despite using TRIM 
+- As a landscape designer, I learned early on that when drawing landscape designs to **document each step, save each iteration, and keep a notepad nearby**
     - When creating this database, I save the code here in GitHub after each step of the cleaning process as reference points to fall back to
+        -  When creating the Draft Report, I used UPDATE SET instead of INSERT INTO and lost all data in the table
+        -  I used TRUNCATE to clear all records and then copied queries from GitHub and reran them to replace the table information
     - My mind was producing new ideas with each step.  Writing the ideas down helped to remember them and stay on track
-    - I was reminded the importance of finishing each step before moving on to the next one
+    - I was reminded the importance of **finishing each step before moving on** to the next one
 - When creating field names in pgAdmin, use lowercase letters since using proper case requires the use of " " around each filed name
+- **Finally, know when to take breaks or stop!**
+    - Because I enjoy this, I often entered a Flow State and not want to stop
+    - Having a couple minutes away from the screen helps maintain focus
 
