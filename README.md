@@ -85,8 +85,9 @@ A desire to win my Fantasy Football leagues led to the realization that I have a
     - This process provides excellent knowledge of the data making analyzing it easier
     - The detailed methodical process required is the same process as my thought and reasoning process
 - **Data cleaning never ends!**
-    - When creating the Draft Report, I discovered unremoved whitespace on players names despite using TRIM 
-- As a landscape designer, I learned early on that when drawing landscape designs to **document each step, save each iteration, and keep a notepad nearby**
+    - When creating the Draft Report, I discovered unremoved whitespace on players names despite using TRIM
+    - I then had to identify what the white space was and reclean the players field in all tables
+- As a landscape designer, I learned early on that when drawing landscape designs to **document each step, save each iteration**, and keep a notepad nearby
     - When creating this database, I save the code here in GitHub after each step of the cleaning process as reference points to fall back to
         -  When creating the Draft Report, I used UPDATE SET instead of INSERT INTO and lost all data in the table
         -  I used TRUNCATE to clear all records and then copied queries from GitHub and reran them to replace the table information
