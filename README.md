@@ -95,6 +95,6 @@ A desire to win my Fantasy Football leagues led to the realization that I have a
     - I was reminded the importance of **finishing each step before moving on** to the next one
 - When creating field names in pgAdmin, use lowercase letters since using proper case requires the use of " " around each filed name
 - **Finally, know when to take breaks or stop!**
-    - Because I enjoy this, I often entered a Flow State and not want to stop
+    - Because I enjoy this, I often entered a Flow State and did not want to stop
     - Having a couple minutes away from the screen helps maintain focus
 
