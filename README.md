@@ -1,5 +1,5 @@
 # Fantasy_Football_database_SQL
-A desire to win my Fantasy Football leagues led to the realization that I have a passion for Data Analytics.  What once began as manually entering 100s of rows of data into Excel to prepare for the draft, has evolved into the creation of this Fantasy Football data base.  I will create the database using pgAdmin and postgreSQL.  Upon completion, I will query the data to create a draft strategy report for the 2024 season.    
+A desire to win my Fantasy Football leagues led to the realization that I have a passion for Data Analytics.  What once began as manually entering 100s of rows of data into Excel to prepare for the draft, has evolved into the creation of this Fantasy Football data base.  I created the database using pgAdmin and postgreSQL.  Upon completion, I will query the data to create the [2024 Draft Report](https://github.com/bhammy27/2024_Draft_Report_SQL).  I will use the report to draft my 2024 fantasy team.
 #### How does someone win Fantasy Football?
   -  The first step is to draft a team of players from 6 different positions 
   -    A team has 1 Quarterback, 2 Running Backs, 2 Wide Receivers, 1 Tight End, 1 Flex position (which can be another Running Back, Wide Receiver, or Tight End), and finally 1 Kicker and Team Defense
@@ -9,7 +9,6 @@ A desire to win my Fantasy Football leagues led to the realization that I have a
   -  After 14 weeks, the top 6 teams compete in the playoffs for the Championship
 ## My Intentions:
   -  Win my Fantasy Football leagues by querying and analyzing the database to draft the best team possible
-      - Prepare this data to create a [2024 Draft Analysis](https://github.com/bhammy27/2024_Draft_Report_SQL)
   -  Create and analyze a database from csv files using ETL and data modeling skills
       - Write queries using both DDL and DML 
   -  Create a reference repository with frequently used queries and functions
@@ -22,21 +21,24 @@ A desire to win my Fantasy Football leagues led to the realization that I have a
 # Creating the Fantasy Football data base:
 - First, I created and defined a new data base in pgAdmin and created 6 tables, one for each fantasy football position
   
-![Screenshot (64)](https://github.com/bhammy27/Fantasy_Football_db/assets/154477061/0422e85c-3733-467a-b70b-6a5ae21acfdd)
+![Screenshot (64)](https://github.com/bhammy27/Fantasy_Football_database_SQL/assets/154477061/e0e2427a-cb35-4388-85d8-3af55c8843cc)
+
 
 ### Cleaning and transforming the raw tables
 -  All tables were checked to ensure there were 18 distinct weeks, 32 distinct team_codes, and 6 distinct seasons
 -  A count of all distinct players was also created and matched with values in the csv
--  A new filed called position was added which will help when creating a player_index table that will be used with data visualization tools later
+-  A new field called position was added which will help when creating a player_index table that will be used with data visualization tools later
 
-![Screenshot (81)](https://github.com/bhammy27/Fantasy_Football_db/assets/154477061/9d359290-a2a6-4238-9160-07410074ddf2)
+![Screenshot (81)](https://github.com/bhammy27/Fantasy_Football_database_SQL/assets/154477061/824881f3-b84d-4548-98e0-a3a4235011b2)
+
 
 ### Creating and adding a new field with aggregated values from other fields
 -  The kicker table had 3 fields that could be combined into 1 field since the fantasy point total for each field is the same
 -  I created a field called "under_forty" which combines the data from field goals made under 20 yards, in the 20 yard range, and in the 30 yard range.
 -  The queries used to create the "under_forty" field, import the aggregated data into it, and delete the unnecessary fields can be seen here:
 
-    ![Screenshot (61)](https://github.com/bhammy27/Fantasy_Football_db/assets/154477061/eb5b107a-0863-4318-8ca4-5633e75eda7d)
+![Screenshot (61)](https://github.com/bhammy27/Fantasy_Football_database_SQL/assets/154477061/7f305f05-848d-4598-91df-478dcd20ef1f)
+
 
 ### Filtering out and removing unnecessary records
 -  The original data source included every NFL player rostered in 2023
@@ -45,9 +47,10 @@ A desire to win my Fantasy Football leagues led to the realization that I have a
 -  The following query depicts the process of removing these players from the kicker table
     - This process was replicated in all position tables
 
-    ![Screenshot (62)](https://github.com/bhammy27/Fantasy_Football_db/assets/154477061/eeec2200-3173-4f3d-87a6-1e1f7e1c0e75)
+![Screenshot (62)](https://github.com/bhammy27/Fantasy_Football_database_SQL/assets/154477061/6f3871ae-0511-49ae-a6fe-4a133ae7625b)
+![Screenshot (63)](https://github.com/bhammy27/Fantasy_Football_database_SQL/assets/154477061/bf490f75-d1df-4e16-a36e-ca0709465d86)
 
-    ![Screenshot (63)](https://github.com/bhammy27/Fantasy_Football_db/assets/154477061/667fe702-1d15-4564-819d-b1a5a3ff5520)
+
  
 ### Checking for and correcting duplicate rows
 - The exact combination of the week, player, and season fields makes each record unique
@@ -55,14 +58,15 @@ A desire to win my Fantasy Football leagues led to the realization that I have a
 - The query below revels wide receivers with 18 games played in 2021
     - The max games per season is 17
  
-![Screenshot (76)](https://github.com/bhammy27/Fantasy_Football_db/assets/154477061/ea457b72-cfd4-4c80-9b62-a048d9409ce2)
+![Screenshot (76)](https://github.com/bhammy27/Fantasy_Football_database_SQL/assets/154477061/61786a76-3cb2-44da-b8f8-bb2677f13b8d)
+
 
 - In the running_back table Raheem Mostert also had 18 games played
 - The query below was used to check out the problem and correct it
   
-![Screenshot (77)](https://github.com/bhammy27/Fantasy_Football_db/assets/154477061/e73f742e-853f-49b1-b4ab-5045a3b452a5)
-![Screenshot (78)](https://github.com/bhammy27/Fantasy_Football_db/assets/154477061/b339f640-f50e-49ac-bebe-5d35c7394a86)
 
+![Screenshot (78)](ht![Screenshot (77)](https://github.com/bhammy27/Fantasy_Football_database_SQL/assets/154477061/4f2f5a6a-2516-42cb-ac9a-7cd950862946)
+![Screenshot (78)](https://github.com/bhammy27/Fantasy_Football_database_SQL/assets/154477061/386d7076-d4fe-47e3-a2dc-941a972981a4)
 
 ## Quality Assurance Procedures:
 -  Quality control was a major part of my responsibilities as an account manager in the landscape horticulture industry
