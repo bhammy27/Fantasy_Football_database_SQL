@@ -67,7 +67,13 @@ A desire to win my Fantasy Football leagues led to the realization that I have a
 
 ![Screenshot (78)](ht![Screenshot (77)](https://github.com/bhammy27/Fantasy_Football_database_SQL/assets/154477061/4f2f5a6a-2516-42cb-ac9a-7cd950862946)
 ![Screenshot (78)](https://github.com/bhammy27/Fantasy_Football_database_SQL/assets/154477061/386d7076-d4fe-47e3-a2dc-941a972981a4)
+### Removing duplicate player names
+- After running TRIM() function, I still noticed duplicate player names
+- After being unable to identify the whitespace causing the duplication, I removed the files using the following query: 
 
+![Screenshot (119)](https://github.com/bhammy27/Fantasy_Football_database_SQL/assets/154477061/2ec9d9af-f9c0-4c7d-a7f5-1cd1d415c490)
+
+  
 ## Quality Assurance Procedures:
 -  Quality control was a major part of my responsibilities as an account manager in the landscape horticulture industry
       -  Understanding the importance of quality control led me to apply the following steps to provide quality assurance for this database
@@ -90,7 +96,7 @@ A desire to win my Fantasy Football leagues led to the realization that I have a
     - The detailed methodical process required is the same process as my thought and reasoning process
 - **Data cleaning never ends!**
     - When creating the Draft Report, I discovered unremoved whitespace on players names despite using TRIM
-    - I then had to identify what the white space was and reclean the players field in all tables
+    - After not being able to identify the whitespace, I had to think of another way to replace the values
 - As a landscape designer, I learned early on that when drawing landscape designs to **document each step, save each iteration**, and keep a notepad nearby
     - When creating this database, I save the code here in GitHub after each step of the cleaning process as reference points to fall back to
         -  When creating the Draft Report, I used UPDATE SET instead of INSERT INTO and lost all data in the table
