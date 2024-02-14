@@ -15,8 +15,6 @@ SELECT
 FROM
 	running_back;
 
-SELECT * FROM running_back;
-
 -- filtering out and deleting runningbacks with no targets or carries in 2023
 -- players without 2023 stats add no value to the database
 -- first I first count the number of players being dropped before dropping them
@@ -50,7 +48,7 @@ WHERE player IN (
 
 -- running the query below returns 420 players which is 194 less than the  we started with	
 SELECT 
- 	COUNT(DISTINCT player)
+	COUNT(DISTINCT player)
 FROM
 	running_back;
 	
@@ -87,7 +85,7 @@ FROM
 GROUP BY
 	player
 ORDER BY
-	"2019" DESC,
+	"2020" DESC,
 	player;
 
 -- checking Raheem Mostert who had over 16 games in 2019
@@ -145,3 +143,32 @@ WHERE
     AND season = 2019
     AND week = 7;
 	
+-- After using trim, duplicate player names still appear indicating white space still exists
+-- Changing the year in the following WHERE clause to see if duplicate players appear for each year
+SELECT 
+	DISTINCT(player)
+FROM
+	running_back
+WHERE 
+	season = 2023
+ORDER BY
+	player;
+
+-- Noticed duplicate names only appear in 2023
+-- Will add fpts to the above query to identify the week with the duplicate names
+SELECT 
+	DISTINCT(player),
+	SUM(fpts)
+FROM
+	running_back
+WHERE 
+	season = 2023
+GROUP BY
+	player
+ORDER BY
+	player;
+-- after cross referencing fpts from the query above it appears player in week 1 has the extra whitespace
+-- replacing the player value of week 1 with the correct value of player from week 2
+UPDATE running_back
+SET player = 'Zamir White'
+WHERE player ILIKE '%zamir%' AND season = 2023 AND position = 'RB'
