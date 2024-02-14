@@ -29,7 +29,7 @@ HAVING
 	SUM(pass_att) = 0
 	AND SUM(carries) = 0;
 
--- the results of the above query shows 38 players that needed dropped
+-- the results of the above query shows 37 players that needed dropped
 -- dropping players
 DELETE FROM quarterback
 WHERE player IN (
@@ -45,19 +45,11 @@ WHERE player IN (
 					SUM(pass_att) = 0
 					AND SUM(carries) = 0);
 
--- running the query below returns 135 players which is 38 less than the 104 we started with	
+-- running the query below returns 136 players which is 37 less than the 104 we started with	
 SELECT 
  	COUNT(DISTINCT player)
 FROM
 	quarterback;
-	
--- inserting a new field called position
--- this field will help filter data once we model the database
-ALTER TABLE quarterback
-ADD COLUMN	position varchar(3);
--- Assigning the position abbreviation to the new field
-UPDATE quarterback
-SET position = 'QB';
 
 -- trimming all whitespaces from text fields
 SELECT
@@ -86,60 +78,4 @@ GROUP BY
 ORDER BY
 	"2023" DESC,
 	player;
-	
--- checking Baker Mayfield who had 18 games in 2023
-SELECT *
-FROM
-	quarterback
-WHERE
-	player = 'Baker Mayfield'
-	AND season = 2023
-ORDER BY
-	week;
-	
--- this shows the same stats for weeks 4 & 5 
--- Baker had a BYE in week 5.  I will delete that record
-DELETE FROM 
-	quarterback
-WHERE 
-	player = 'Baker Mayfield'
-    AND season = 2023
-    AND week = 5;
-	
--- checking Matt Ryan who had 18 games in 2021
-SELECT *
-FROM
-	quarterback
-WHERE
-	player = 'Matt Ryan'
-	AND season = 2021
-ORDER BY
-	week;
-	
--- this shows the same stats for weeks 5 & 6 
--- Matt had a BYE in week 6.  I will delete that record
-DELETE FROM 
-	quarterback
-WHERE 
-	player = 'Matt Ryan'
-    AND season = 2021
-    AND week = 6;
-	
--- checking Josh Allen who had 18 games in 2020
-SELECT *
-FROM
-	quarterback
-WHERE
-	player = 'Josh Allen'
-	AND season = 2020
-ORDER BY
-	week;
-	
--- this shows the same stats for weeks 10 & 11 
--- Josh had a BYE in week 11.  I will delete that record
-DELETE FROM 
-	quarterback
-WHERE 
-	player = 'Josh ALlen'
-    AND season = 2020
-    AND week = 11;
+--  All players have the correct max total number of games
