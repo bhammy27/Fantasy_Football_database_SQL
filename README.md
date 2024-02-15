@@ -98,12 +98,10 @@ A desire to win my Fantasy Football leagues helped me realize that I have a pass
     - When creating the Draft Report, I discovered unremoved whitespace on players names despite using TRIM
     - After not being able to identify the whitespace, I had to think of another way to replace the values
 - As a landscape designer, I learned when drawing landscape designs to **document each step, save each iteration**, and keep a notepad nearby
-    - When creating this database, I saved the code here in GitHub after each step creating a reference points 
+    - When creating this database, I saved the code here in GitHub after each step creating a reference point 
         -  When creating the Draft Report, I used UPDATE SET instead of INSERT INTO and lost all data in the table
         -  I used TRUNCATE to clear all records then recreated the table from saved queries 
     - My mind was producing new ideas with each step.  Writing the ideas down helped to remember them and stay on track
 - When creating field names in pgAdmin, use lowercase letters. Using proper case requires the use of " " around field names
-- **Finally, know when to take breaks or stop!**
-    - Because I enjoy this, I often entered a Flow State and did not want to stop
-    - Having a couple minutes away from the screen helps maintain focus
+
 
