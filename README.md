@@ -1,11 +1,11 @@
 # Fantasy_Football_database_SQL
-A desire to win my Fantasy Football leagues helped me realize that I have a passion for Data Analytics.  What once began as manually entering 100s of rows of data into Excel to prepare for the draft, has evolved into the creation of this Fantasy Football data base.  I created the database using pgAdmin and postgreSQL.  Upon completion, I will query the data to create the [2024 Draft Report](https://github.com/bhammy27/2024_Draft_Report_SQL).  I will also create visualizations to help draft my team next season, and to help manage the team on a weekly basis during the season.  
+A desire to win my Fantasy Football leagues helped me realize that I have a passion for Data Analytics. What once began as manually entering 100s of rows of data into Excel to prepare for the draft, has evolved into the creation of this Fantasy Football data base. I created the database using pgAdmin and postgreSQL. Upon completion, I will query the data to create the [2024 Draft Report](https://github.com/bhammy27/2024_Draft_Report_SQL). I will also create visualizations to help draft my team next season, and to help manage the team on a weekly basis during the season.  
 #### How does someone win Fantasy Football?
   -  The first step is to draft a team of players from 6 different positions 
   -    A team has 1 Quarterback, 2 Running Backs, 2 Wide Receivers, 1 Tight End, 1 Flex position (which can be another Running Back, Wide Receiver, or Tight End), and finally 1 Kicker and Team Defense
   -  Each week of the NFL season, your team faces another team in your league of 10 players.
   -  The team that accumulates the most points which each week gets a win
-      - Points are accumulated based off the players stats for that week.  Each stat category has a different point value.
+      - Points are accumulated based off the players stats for that week. Each stat category has a different point value.
   -  After 14 weeks, the top 6 teams compete in the playoffs for the Championship
 ## My Intentions:
   -  Win my Fantasy Football leagues by querying and analyzing the database to draft the best team possible
@@ -91,17 +91,17 @@ A desire to win my Fantasy Football leagues helped me realize that I have a pass
 -  Rechecked players 2023 stats to ensure all players had at least 1 target, carry, pass attempt, or field goal
   
 # Things I learned creating this database
-- Creating databases is FUN!!
+- Creating databases is FUN
     - This process provides excellent knowledge of the data making analyzing it easier
     - The detailed methodical process required is very similar to the process of landscape design
 - **Data cleaning never ends!**
     - When creating the Draft Report, I discovered unremoved whitespace on players names despite using TRIM
     - After not being able to identify the whitespace, I had to think of another way to replace the values
 - As a landscape designer, I learned when drawing landscape designs to **document each step, save each iteration**, and keep a notepad nearby
-    - When creating this database, I saved the code here in GitHub after each step creating a reference point 
+    - I saved the code here in GitHub after each step creating a reference point 
         -  When creating the Draft Report, I used UPDATE SET instead of INSERT INTO and lost all data in the table
         -  I used TRUNCATE to clear all records then recreated the table from saved queries 
-    - My mind was producing new ideas with each step.  Writing the ideas down helped to remember them and stay on track
+    - My mind was producing new ideas with each step. Writing the ideas down helped to remember them and stay on track
 - When creating field names in pgAdmin, use lowercase letters. Using proper case requires the use of " " around field names
 
 
