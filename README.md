@@ -29,9 +29,6 @@ A desire to win my Fantasy Football leagues helped me realize that I have a pass
 -  A count of all distinct players was also created and matched with values in the csv
 -  A new field called position was added which will help when creating a player_index table that will be used with data visualization tools later
 
-![Screenshot (81)](https://github.com/bhammy27/Fantasy_Football_database_SQL/assets/154477061/824881f3-b84d-4548-98e0-a3a4235011b2)
-
-
 ### Creating and adding a new field with aggregated values from other fields
 -  The kicker table had 3 fields that could be combined into 1 field because each field has the same fantasy point value
 -  I created a field called "under_forty" which combines the data from field goals made under 20 yards, in the 20 yard range, and in the 30 yard range.
